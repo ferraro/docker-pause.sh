@@ -1,9 +1,14 @@
 #!/bin/bash
-trap 'echo sigterm ; exit' SIGTERM
-trap 'echo sigkill ; exit' SIGKILL
 
-echo waiting
-while true;
-do
-    sleep 1
-done
+term() {
+    echo 'sigterm / sigkill received'
+    kill -TERM $child
+    exit
+}
+
+trap term SIGTERM
+trap term SIGKILL
+
+sleep inf &
+child=$!
+wait $child
