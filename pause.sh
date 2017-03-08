@@ -1,13 +1,12 @@
 #!/bin/bash
 
 term() {
-    echo 'sigterm / sigkill received'
+    echo 'SIGTERM received'
     kill -TERM $child
-    exit
+    exit $?
 }
 
 trap term SIGTERM
-trap term SIGKILL
 
 sleep inf &
 child=$!
